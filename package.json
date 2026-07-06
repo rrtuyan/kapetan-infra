@@ -1,0 +1,11 @@
+{
+  "name": "kapetan-infra",
+  "version": "1.0.0",
+  "description": "The backbone handling every query for KapeTan's functionality.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kapetan-ltd",
+  "license": "ISC"
+}
