@@ -1,18 +1,28 @@
-import Fastify from 'fastify';
-import apiRoute from './api/index.js';
+import Fastify from "fastify";
+import mongoose from "mongoose";
+import apiRoute from "./api/index.js";
 
 const fastify = Fastify({
-  logger: true
+  logger: true,
 });
 
 fastify.register(apiRoute, { prefix: "/api/v1" });
-fastify.get('/', async () => ({ retcode: 0, msg: null, data: null }));
+fastify.get("/", async () => ({ retcode: 0, msg: null, data: null }));
 
 (async () => {
   try {
-    await fastify.listen({ port: process.env?.PORT || 3000, host: '0.0.0.0' });
+    await mongoose.connect(process.env.DB_URL);
+    console.log("You successfully connected to MongoDB!");
+    try {
+      await fastify.listen({
+        port: process.env?.PORT || 3000,
+        host: "0.0.0.0",
+      });
+    } catch (err) {
+      fastify.log.error(err);
+      process.exit(1);
+    }
   } catch (err) {
-    fastify.log.error(err);
-    process.exit(1);
+    console.dir(err);
   }
 })();
